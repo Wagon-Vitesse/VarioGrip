@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VarioGrip — Étau Adaptatif Industriel</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --steel:#1A1E2A;--mid:#252B3B;--light:#353D52;
+  --cream:#F0EDEA;--orange:#E8610A;--orange-d:#b34c08;
+  --blue:#2B5CE6;--gray:#8A929E;--gray-l:#C4C8D0;
+  --green:#16a34a;--red:#dc2626;
+}
+html{scroll-behavior:smooth}
+body{background:var(--steel);color:var(--cream);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:15px 56px;background:rgba(26,30,42,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:1.5rem;color:var(--cream);text-decoration:none}
+.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:26px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray-l);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--orange)}
+.nav-cta{background:var(--orange)!important;color:#fff!important;padding:9px 22px;font-weight:600!important}
+.nav-promo{color:var(--orange)!important;border:1px solid var(--orange);padding:8px 16px;font-weight:600!important;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,97,10,0)}50%{box-shadow:0 0 0 4px rgba(232,97,10,.22)}}
+.page{display:none}.page.active{display:block}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:130px 56px 80px;gap:64px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 60% at 65% 45%,rgba(43,92,230,.1) 0%,transparent 70%),radial-gradient(ellipse 35% 40% at 15% 75%,rgba(232,97,10,.07) 0%,transparent 60%)}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:28px;height:2px;background:var(--orange)}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(3rem,5.5vw,5.4rem);line-height:.93;color:var(--cream);margin-bottom:22px}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero-intro{font-size:1.15rem;font-weight:600;color:var(--cream);max-width:480px;line-height:1.55;margin-bottom:14px;border-left:3px solid var(--orange);padding-left:14px}
+.hero-body{font-size:.95rem;font-weight:300;color:var(--gray-l);max-width:480px;line-height:1.78;margin-bottom:32px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px}
+.btn-primary{background:var(--orange);color:#fff;font-weight:600;font-size:.9rem;letter-spacing:.04em;padding:14px 32px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-primary:hover{background:var(--orange-d);transform:translateY(-1px)}
+.btn-ghost{color:var(--cream);font-size:.9rem;font-weight:500;padding:14px 24px;border:1px solid rgba(255,255,255,.22);text-decoration:none;display:inline-block;transition:border-color .2s,color .2s;cursor:pointer}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.hero-proof{display:flex;gap:22px;flex-wrap:wrap}
+.proof-item{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--gray-l)}
+.proof-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);flex-shrink:0}
+
+/* PHOTO PRODUIT */
+.product-photo{position:relative;border-radius:4px;overflow:hidden}
+.product-photo img{width:100%;height:auto;display:block;object-fit:cover;filter:brightness(1.05) contrast(1.02) saturate(1.1)}
+.photo-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(43,92,230,.12) 0%,transparent 50%,rgba(232,97,10,.08) 100%);pointer-events:none}
+.photo-badge{position:absolute;bottom:20px;left:20px;background:rgba(26,30,42,.88);backdrop-filter:blur(8px);border:1px solid rgba(232,97,10,.4);padding:10px 16px}
+.photo-badge-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;color:var(--cream)}
+.photo-badge-sub{font-size:.72rem;color:var(--orange);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+/* STATS */
+.stats-strip{background:var(--mid);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:36px 56px;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-item{text-align:center;padding:0 20px;border-right:1px solid rgba(255,255,255,.08)}
+.stat-item:last-child{border-right:none}
+.stat-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.8rem;color:var(--cream);line-height:1;margin-bottom:5px}
+.stat-value span{color:var(--orange)}
+.stat-label{font-size:.74rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+
+/* SECTIONS */
+.sec{padding:84px 56px}
+.sec-mid{background:var(--mid)}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(2.2rem,4vw,3.3rem);line-height:1;margin-bottom:16px}
+.sec-lead{font-size:1rem;font-weight:300;color:var(--gray-l);max-width:600px;line-height:1.78;margin-bottom:44px}
+
+/* PROBLÈME / SOLUTION */
+.problem-solution{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:48px}
+.ps-card{padding:36px 32px}
+.ps-card.problem{background:#1f1020;border-top:3px solid #6b2a6b}
+.ps-card.solution{background:#0e1e14;border-top:3px solid var(--orange)}
+.ps-label{font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ps-label.prob{color:#a855f7}
+.ps-label.sol{color:var(--orange)}
+.ps-card h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.3rem;margin-bottom:12px;color:var(--cream)}
+.ps-card p{font-size:.88rem;color:var(--gray-l);line-height:1.72}
+
+/* VIDEO */
+.video-wrap{max-width:860px;margin:0 auto}
+.canvas-shell{position:relative;width:100%;padding-top:56.25%;background:#060810;border:1px solid rgba(255,255,255,.08);overflow:hidden}
+.canvas-shell canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.42);cursor:pointer;transition:background .2s}
+.play-overlay:hover{background:rgba(0,0,0,.22)}
+.play-btn{width:70px;height:70px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:playPop 2s ease-in-out infinite;transition:transform .2s}
+.play-btn:hover{transform:scale(1.08)}
+@keyframes playPop{0%,100%{box-shadow:0 0 0 0 rgba(232,97,10,.5)}50%{box-shadow:0 0 0 18px rgba(232,97,10,0)}}
+.vctrls{background:var(--mid);padding:10px 16px;display:flex;align-items:center;gap:12px}
+.vc-btn{background:none;border:none;color:var(--gray-l);cursor:pointer;font-size:1rem;padding:4px 8px;transition:color .2s}
+.vc-btn:hover{color:var(--orange)}
+.progress-bar{flex:1;height:4px;background:rgba(255,255,255,.1);cursor:pointer}
+.progress-fill{height:100%;background:var(--orange);width:0%}
+.time-lbl{font-size:.74rem;color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:600;white-space:nowrap}
+.vid-caption{text-align:center;margin-top:14px;font-size:.76rem;color:var(--gray);letter-spacing:.04em}
+
+/* COMMENT ÇA MARCHE */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:0}
+.how-card{background:var(--mid);padding:32px 28px;position:relative;border-top:3px solid transparent;transition:border-color .25s,background .25s}
+.how-card:hover{border-color:var(--orange);background:var(--light)}
+.how-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3rem;color:rgba(232,97,10,.18);line-height:1;margin-bottom:12px}
+.how-card h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:10px}
+.how-card p{font-size:.86rem;color:var(--gray);line-height:1.72}
+
+/* AVANTAGES */
+.av-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.av-list{list-style:none}
+.av-item{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.av-item:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.av-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:.12em;color:var(--orange);padding-top:4px;width:26px;flex-shrink:0}
+.av-item h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.06rem;margin-bottom:5px}
+.av-item p{font-size:.84rem;color:var(--gray);line-height:1.68}
+.cmp-block{background:var(--steel);border:1px solid rgba(255,255,255,.08);padding:28px}
+.cmp-lbl{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:14px}
+.cmp-row{display:flex;align-items:center;margin-bottom:13px}
+.cmp-row:last-child{margin-bottom:0}
+.cmp-name{font-size:.81rem;color:var(--gray-l);width:140px;flex-shrink:0}
+.cmp-bar-wrap{flex:1;height:5px;background:rgba(255,255,255,.08);margin:0 12px}
+.cmp-bar{height:100%;animation:barGrow .9s ease-out both}
+@keyframes barGrow{from{width:0}}
+.cmp-bar.vario{background:var(--orange)}.cmp-bar.trad{background:var(--gray)}
+.cmp-bar.w90{width:90%}.cmp-bar.w82{width:82%}.cmp-bar.w78{width:78%}
+.cmp-bar.w30{width:30%}.cmp-bar.w25{width:25%}.cmp-bar.w35{width:35%}
+.cmp-pct{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;width:42px;text-align:right}
+.cmp-div{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
+
+/* SPECS */
+.tbl-wrap{border:1px solid rgba(255,255,255,.08);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead{background:var(--blue)}
+thead th{padding:12px 20px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#fff}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody tr:last-child{border-bottom:none}
+tbody td{padding:14px 20px;font-size:.86rem;color:var(--gray-l)}
+tbody td:first-child{color:var(--cream);font-weight:500}
+tbody td:last-child{color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-weight:700}
+
+/* SECTEURS */
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.app-card{background:var(--mid);padding:26px 22px;display:flex;flex-direction:column;gap:8px;transition:background .2s}
+.app-card:hover{background:var(--light)}
+.app-icon{font-size:1.7rem}
+.app-card h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.98rem}
+.app-card p{font-size:.8rem;color:var(--gray);line-height:1.62}
+
+/* BOUTIQUE */
+.promo-bar{background:var(--orange);color:#fff;text-align:center;padding:9px 56px;font-size:.82rem;font-weight:600;letter-spacing:.06em;display:none;align-items:center;justify-content:center;gap:12px;position:fixed;top:57px;left:0;right:0;z-index:150;flex-wrap:wrap}
+.promo-bar strong{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900}
+.cd-wrap{display:flex;gap:3px;align-items:center}
+.cd-b{background:rgba(0,0,0,.22);padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.95rem;min-width:30px;text-align:center}
+
+.shop-hero{padding:170px 56px 56px;display:grid;grid-template-columns:1fr 1fr;gap:66px;align-items:start}
+.shop-img-wrap{position:relative}
+.shop-product-img{width:100%;display:block;border-radius:4px;border:1px solid rgba(255,255,255,.08)}
+.bdg-new{position:absolute;top:14px;left:14px;background:var(--blue);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.76rem;letter-spacing:.1em;padding:5px 12px;text-transform:uppercase;z-index:2}
+.bdg-pct{position:absolute;top:14px;right:14px;background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;padding:5px 12px;z-index:2}
+.shop-img-caption{text-align:center;font-size:.7rem;color:var(--gray);margin-top:8px;letter-spacing:.04em}
+
+.prod-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.prod-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(2.4rem,4vw,3.8rem);line-height:.95;margin-bottom:6px}
+.prod-sub{font-size:.86rem;color:var(--gray);margin-bottom:20px}
+.prod-desc{font-size:.9rem;color:var(--gray-l);line-height:1.72;margin-bottom:20px;padding:16px;background:rgba(255,255,255,.03);border-left:2px solid var(--orange)}
+.rating-row{display:flex;align-items:center;gap:9px;margin-bottom:22px;flex-wrap:wrap}
+.stars{color:#f59e0b;letter-spacing:2px}
+.r-count{font-size:.78rem;color:var(--gray)}
+.r-verif{font-size:.7rem;background:rgba(22,163,74,.12);color:#4ade80;padding:2px 9px;border:1px solid rgba(22,163,74,.25)}
+
+.price-box{background:var(--mid);border:1px solid rgba(255,255,255,.08);padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden}
+.price-box::after{content:'OFFRE LANCEMENT';position:absolute;top:12px;right:-26px;background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.68rem;letter-spacing:.1em;padding:4px 36px;transform:rotate(15deg)}
+.price-row2{display:flex;align-items:flex-end;gap:12px;margin-bottom:6px}
+.p-old{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;color:var(--gray);text-decoration:line-through;font-weight:700}
+.p-new{font-family:'Barlow Condensed',sans-serif;font-size:3.3rem;font-weight:900;color:var(--cream);line-height:1}
+.p-new span{color:var(--orange)}
+.p-save{background:rgba(232,97,10,.1);border:1px solid rgba(232,97,10,.28);color:var(--orange);font-weight:700;font-size:.8rem;padding:4px 12px;display:inline-block;margin-bottom:10px}
+.p-ht{font-size:.74rem;color:var(--gray)}
+
+.opt-sec{margin-bottom:18px}
+.opt-lbl{font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+.opt-btns{display:flex;gap:6px;flex-wrap:wrap}
+.opt-btn{border:1px solid rgba(255,255,255,.12);color:var(--gray-l);font-size:.81rem;font-weight:500;padding:7px 15px;cursor:pointer;background:none;transition:all .2s}
+.opt-btn:hover,.opt-btn.active{border-color:var(--orange);color:var(--orange);background:rgba(232,97,10,.05)}
+
+.add-row{display:flex;gap:8px;margin-bottom:10px}
+.qty-wrap{display:flex;align-items:center;border:1px solid rgba(255,255,255,.12)}
+.qty-btn{background:none;border:none;color:var(--cream);font-size:1.3rem;padding:0 12px;cursor:pointer;transition:background .2s}
+.qty-btn:hover{background:rgba(255,255,255,.05)}
+.qty-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;padding:0 14px;min-width:38px;text-align:center;border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center}
+.btn-add{flex:1;background:var(--orange);color:#fff;border:none;cursor:pointer;font-weight:700;font-size:.88rem;letter-spacing:.06em;text-transform:uppercase;padding:0 20px;transition:background .2s,transform .1s}
+.btn-add:hover{background:var(--orange-d);transform:translateY(-1px)}
+.btn-quote2{width:100%;background:none;border:1px solid rgba(255,255,255,.12);color:var(--cream);cursor:pointer;font-weight:500;font-size:.84rem;padding:11px;margin-bottom:14px;transition:border-color .2s,color .2s}
+.btn-quote2:hover{border-color:var(--orange);color:var(--orange)}
+
+.trust-row{display:flex;border-top:1px solid rgba(255,255,255,.07);padding-top:14px}
+.tr-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:0 4px;border-right:1px solid rgba(255,255,255,.07)}
+.tr-item:last-child{border-right:none}
+.tr-icon{font-size:1.2rem}
+.tr-lbl{font-size:.67rem;font-weight:600;color:var(--gray-l);line-height:1.3}
+.tr-sub{font-size:.61rem;color:var(--gray)}
+
+.urgency{background:linear-gradient(135deg,#1a0a00,var(--mid));border:1px solid rgba(232,97,10,.28);margin:0 56px 52px;padding:28px 32px;display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center}
+.urg-icon{font-size:2rem}
+.urgency h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.35rem;color:var(--orange);margin-bottom:4px}
+.urgency p{font-size:.83rem;color:var(--gray-l)}
+.stock-bg{margin-top:8px;background:rgba(255,255,255,.08);height:4px;width:170px}
+.stock-fg{height:100%;background:var(--orange);width:23%}
+
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:38px}
+.pack-card{background:var(--steel);padding:28px 24px;border:2px solid transparent;position:relative;transition:border-color .25s;display:flex;flex-direction:column}
+.pack-card.feat{border-color:var(--orange)}
+.pack-card:not(.feat):hover{border-color:rgba(232,97,10,.3)}
+.pack-feat-bdg{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:.1em;padding:3px 14px;white-space:nowrap}
+.pack-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;margin-bottom:4px}
+.pack-desc{font-size:.78rem;color:var(--gray);margin-bottom:16px;line-height:1.5}
+.pack-old{font-size:.93rem;color:var(--gray);text-decoration:line-through;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.pack-price{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--cream);line-height:1;margin-bottom:3px}
+.pack-price span{color:var(--orange)}
+.pack-saving{font-size:.72rem;color:#4ade80;margin-bottom:18px;font-weight:600}
+.pack-feats{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:22px;flex:1}
+.pack-feats li{font-size:.8rem;color:var(--gray-l);display:flex;align-items:flex-start;gap:7px}
+.pack-feats li::before{content:'✓';color:var(--orange);font-weight:700;flex-shrink:0}
+.pack-feats li.off{color:var(--gray)}.pack-feats li.off::before{content:'–';color:var(--gray)}
+.pack-btn{border:none;padding:11px;cursor:pointer;font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
+.pack-btn.prim{background:var(--orange);color:#fff}.pack-btn.prim:hover{background:var(--orange-d)}
+.pack-btn.sec{background:none;border:1px solid rgba(255,255,255,.12);color:var(--cream)}.pack-btn.sec:hover{border-color:var(--orange);color:var(--orange)}
+
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:38px}
+.testi-card{background:var(--mid);padding:24px 20px;border-left:3px solid transparent;transition:border-color .2s}
+.testi-card:hover{border-color:var(--orange)}
+.t-stars{color:#f59e0b;font-size:.86rem;letter-spacing:2px;margin-bottom:11px}
+.t-text{font-size:.86rem;color:var(--gray-l);line-height:1.72;margin-bottom:14px;font-style:italic}
+.t-author{display:flex;align-items:center;gap:9px}
+.t-avatar{width:30px;height:30px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.76rem;color:var(--orange);flex-shrink:0}
+.t-name{font-weight:600;font-size:.8rem;color:var(--cream)}
+.t-role{font-size:.7rem;color:var(--gray)}
+
+.faq-list{max-width:700px;margin-top:38px}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.07)}
+.faq-q{width:100%;background:none;border:none;color:var(--cream);text-align:left;padding:18px 0;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q:hover{color:var(--orange)}
+.faq-chev{font-size:.86rem;color:var(--orange);transition:transform .25s;flex-shrink:0}
+.faq-chev.open{transform:rotate(180deg)}
+.faq-a{font-size:.84rem;color:var(--gray-l);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s}
+.faq-a.open{max-height:220px;padding-bottom:14px}
+
+.final-cta{background:var(--orange);padding:60px 56px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:32px}
+.final-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(1.8rem,3.5vw,2.7rem);line-height:1.05;color:#fff}
+.final-cta p{color:rgba(255,255,255,.82);font-size:.88rem;margin-top:6px}
+.btn-white{background:#fff;color:var(--orange);font-weight:700;font-size:.88rem;letter-spacing:.05em;text-transform:uppercase;padding:14px 34px;text-decoration:none;display:inline-block;cursor:pointer;border:none;transition:background .2s;white-space:nowrap}
+.btn-white:hover{background:var(--cream)}
+
+footer{background:#0F1118;padding:34px 56px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.05)}
+.foot-brand{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:1.25rem;color:var(--cream)}
+.foot-brand span{color:var(--orange)}
+.foot-meta{font-size:.72rem;color:var(--gray);text-align:right;line-height:1.8}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;font-weight:700;padding:12px 20px;font-size:.84rem;z-index:999;transform:translateY(70px);opacity:0;transition:all .35s cubic-bezier(.2,.8,.2,1)}
+.toast.show{transform:translateY(0);opacity:1}
+
+@media(max-width:900px){
+  nav{padding:12px 18px}.nav-links{display:none}
+  .hero,.av-layout,.shop-hero,.problem-solution{grid-template-columns:1fr;padding:114px 22px 50px;gap:32px}
+  .stats-strip{grid-template-columns:repeat(2,1fr);padding:26px 22px}
+  .stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:14px}
+  .how-grid,.app-grid,.pack-grid,.testi-grid{grid-template-columns:1fr}
+  .sec{padding:52px 22px}
+  .urgency{grid-template-columns:auto 1fr;margin:0 22px 34px;padding:18px;gap:14px}
+  .urgency .btn-primary{display:none}
+  .final-cta{grid-template-columns:1fr;padding:46px 22px}
+  footer{flex-direction:column;gap:10px;padding:26px 22px}.foot-meta{text-align:center}
+  .promo-bar{padding:7px 16px;top:49px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#" onclick="goPres();return false;"><span>Vario</span>Grip</a>
+  <ul class="nav-links">
+    <li><a onclick="goPres()">Produit</a></li>
+    <li><a onclick="goPres();setTimeout(()=>document.getElementById('comment').scrollIntoView({behavior:'smooth'}),80)">Fonctionnement</a></li>
+    <li><a onclick="goPres();setTimeout(()=>document.getElementById('demo').scrollIntoView({behavior:'smooth'}),80)">Schéma démo</a></li>
+    <li><a onclick="goShop()" class="nav-promo">🔥 −30% lancement</a></li>
+    <li><a onclick="goShop()" class="nav-cta">Commander</a></li>
+  </ul>
+</nav>
+
+<!-- ══ PAGE PRÉSENTATION ══ -->
+<div id="page-pres" class="page active">
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">Innovation atelier · 2026</div>
+    <h1>L'étau qui<br/>s'adapte à<br/><em>toute forme.</em></h1>
+    <p class="hero-intro">Un problème vieux comme le fraisage, enfin résolu : serrer une pièce à géométrie complexe sans perdre du temps, sans risquer de la déformer, sans avoir besoin d'un mors dédié.</p>
+    <p class="hero-body">Le VarioGrip est un étau d'établi standard — celui que vous connaissez déjà, que vous utilisez sur fraiseuse, perceuse à colonne ou sensitive — sauf qu'il s'adapte automatiquement à la forme exacte de la pièce que vous y posez. Cylindrique, hexagonale, irrégulière : il la serre parfaitement, à chaque fois, en quelques secondes.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" onclick="document.getElementById('comment').scrollIntoView({behavior:'smooth'})">Comment ça fonctionne</a>
+      <a class="btn-ghost" onclick="goShop()">Voir l'offre −30%</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item"><div class="proof-dot"></div>Aucun mors dédié nécessaire</div>
+      <div class="proof-item"><div class="proof-dot"></div>Toutes géométries serrées</div>
+      <div class="proof-item"><div class="proof-dot"></div>Compatible toutes machines</div>
+    </div>
+  </div>
+  <div class="product-photo">
+    <canvas id="viseHero" style="width:100%;display:block;border-radius:4px"></canvas>
+    <div class="photo-overlay"></div>
+    <div class="photo-badge">
+      <div class="photo-badge-title">VarioGrip</div>
+      <div class="photo-badge-sub">Étau adaptatif · Offre lancement −30%</div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-value">100<span>%</span></div><div class="stat-label">Géométries supportées</div></div>
+  <div class="stat-item"><div class="stat-value">±0.02<span>mm</span></div><div class="stat-label">Précision de serrage</div></div>
+  <div class="stat-item"><div class="stat-value"><span>&lt;</span>8<span>s</span></div><div class="stat-label">Mise en place</div></div>
+  <div class="stat-item"><div class="stat-value">40<span>kN</span></div><div class="stat-label">Force de bridage</div></div>
+</div>
+
+<!-- PROBLÈME / SOLUTION -->
+<section class="sec" id="probleme">
+  <div class="eyebrow">Pourquoi le VarioGrip ?</div>
+  <h2 class="sec-title">Le problème que<br/>tout atelier connaît</h2>
+  <p class="sec-lead">Un étau classique a deux mâchoires plates. C'est parfait pour une pièce carrée ou rectangulaire. Mais dès que la pièce est ronde, hexagonale, profilée ou de forme libre, tout se complique.</p>
+  <div class="problem-solution">
+    <div class="ps-card problem">
+      <div class="ps-label prob">⚠ Le problème aujourd'hui</div>
+      <h3>Les mâchoires plates ne s'adaptent pas</h3>
+      <p>Avec un étau standard, une pièce ronde ou complexe ne tient pas bien : elle pivote, glisse, ou se déforme sous la pression. On est obligé de fabriquer des mors spéciaux, de perdre du temps à caler la pièce, ou d'accepter un résultat imprecis. Chaque nouvelle géométrie demande une solution différente.</p>
+    </div>
+    <div class="ps-card solution">
+      <div class="ps-label sol">✓ La solution VarioGrip</div>
+      <h3>Des mâchoires qui épousent le contour</h3>
+      <p>Le VarioGrip garde la forme d'un étau classique, mais ses mâchoires sont composées de lamelles indépendantes. Quand vous serrez la vis, chaque lamelle se positionne automatiquement contre la surface de la pièce — quelle que soit sa forme. Le contact est total, la prise est parfaite, sans aucun réglage préalable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMENT ÇA MARCHE -->
+<section class="sec sec-mid" id="comment">
+  <div class="eyebrow">Fonctionnement</div>
+  <h2 class="sec-title">Comment fonctionne<br/>le VarioGrip ?</h2>
+  <p class="sec-lead">Le principe est simple : remplacer les mâchoires rigides d'un étau classique par des mâchoires adaptatives, sans rien changer à l'utilisation. On pose la pièce, on serre la vis — c'est tout.</p>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <h3>On pose la pièce</h3>
+      <p>Vous placez votre pièce dans l'étau exactement comme avec un étau classique. Qu'elle soit ronde, hexagonale, en L, irrégulière — la procédure ne change pas.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <h3>Les lamelles s'adaptent</h3>
+      <p>En tournant la vis de serrage, les lamelles indépendantes de chaque mâchoire se déplacent individuellement. Elles suivent le contour exact de la pièce et créent un contact uniforme sur toute la surface.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <h3>Blocage et serrage</h3>
+      <p>Une fois les lamelles en contact avec la pièce, un système de blocage hydraulique les verrouille en position. La pièce est maintenue fermement, sans risque de glissement ni de déformation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCHÉMA DÉMO -->
+<section class="sec" id="demo">
+  <div class="eyebrow">Schéma animé</div>
+  <h2 class="sec-title">Visualisez le<br/>principe en action</h2>
+  <p class="sec-lead">Ce schéma montre comment les mâchoires du VarioGrip se referment sur différentes formes de pièces — et comment les lamelles épousent précisément chaque contour.</p>
+  <div class="video-wrap">
+    <div class="canvas-shell">
+      <canvas id="demoCanvas"></canvas>
+      <div class="play-overlay" id="playOverlay" onclick="startDemo()">
+        <div class="play-btn">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 3L19 11L5 19V3Z" fill="white"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="vctrls">
+      <button class="vc-btn" id="ppBtn" onclick="togglePlay()">⏸</button>
+      <button class="vc-btn" onclick="restartDemo()">↺</button>
+      <div class="progress-bar" onclick="seekDemo(event)"><div class="progress-fill" id="pFill"></div></div>
+      <span class="time-lbl" id="tLbl">0:00 / 0:40</span>
+    </div>
+  </div>
+  <p class="vid-caption">Schéma de principe · 5 géométries différentes · Les lamelles suivent précisément le contour de la pièce</p>
+</section>
+
+<!-- AVANTAGES -->
+<section class="sec sec-mid" id="avantages">
+  <div class="av-layout">
+    <div>
+      <div class="eyebrow">Avantages concrets</div>
+      <h2 class="sec-title">Ce que ça change<br/>dans votre atelier</h2>
+      <p class="sec-lead">Le VarioGrip s'utilise comme un étau ordinaire — mais il supprime tous les problèmes liés aux pièces à géométrie complexe.</p>
+      <ul class="av-list">
+        <li class="av-item"><span class="av-num">01</span><div><h4>Toutes les pièces, un seul étau</h4><p>Cylindrique, hexagonale, profilée, irrégulière — le VarioGrip serre toutes les formes sans adaptation. Vous n'avez plus besoin de mors spéciaux, de cales ou de supports intermédiaires.</p></div></li>
+        <li class="av-item"><span class="av-num">02</span><div><h4>Gain de temps immédiat</h4><p>Là où la mise en place d'une pièce ronde sur un étau classique peut prendre plusieurs minutes (calage, vérification, retouche), le VarioGrip la bride en moins de 8 secondes.</p></div></li>
+        <li class="av-item"><span class="av-num">03</span><div><h4>Zéro déformation, zéro glissement</h4><p>La pression est répartie uniformément sur toute la surface de contact. Les pièces fines ou à parois minces ne se déforment pas sous le serrage.</p></div></li>
+        <li class="av-item"><span class="av-num">04</span><div><h4>Montage identique à votre étau actuel</h4><p>Interface DIN 650 standard. Le VarioGrip se monte exactement comme n'importe quel étau, sur fraiseuse, perceuse à colonne ou sensitive, sans modification de la machine.</p></div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="cmp-block">
+        <div class="cmp-lbl" style="color:var(--orange);margin-bottom:12px">VarioGrip</div>
+        <div class="cmp-row"><span class="cmp-name">Mise en place</span><div class="cmp-bar-wrap"><div class="cmp-bar vario w90"></div></div><span class="cmp-pct">8s</span></div>
+        <div class="cmp-row"><span class="cmp-name">Précision</span><div class="cmp-bar-wrap"><div class="cmp-bar vario w82"></div></div><span class="cmp-pct">±0.02 mm</span></div>
+        <div class="cmp-row"><span class="cmp-name">Formes serrées</span><div class="cmp-bar-wrap"><div class="cmp-bar vario w78"></div></div><span class="cmp-pct">Toutes</span></div>
+        <div class="cmp-div"></div>
+        <div class="cmp-lbl" style="margin-bottom:12px">Étau classique</div>
+        <div class="cmp-row"><span class="cmp-name">Mise en place</span><div class="cmp-bar-wrap"><div class="cmp-bar trad w30"></div></div><span class="cmp-pct">2–5 min</span></div>
+        <div class="cmp-row"><span class="cmp-name">Précision</span><div class="cmp-bar-wrap"><div class="cmp-bar trad w25"></div></div><span class="cmp-pct">±0.1 mm</span></div>
+        <div class="cmp-row"><span class="cmp-name">Formes serrées</span><div class="cmp-bar-wrap"><div class="cmp-bar trad w35"></div></div><span class="cmp-pct">Carrées seulement</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section class="sec" id="specs">
+  <div class="eyebrow">Spécifications</div>
+  <h2 class="sec-title">VarioGrip</h2>
+  <p class="sec-lead">Données constructeur · 2026</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Paramètre</th><th>Description</th><th>Valeur</th></tr></thead>
+      <tbody>
+        <tr><td>Ouverture max.</td><td>Mâchoires complètement écartées</td><td>250 mm</td></tr>
+        <tr><td>Ouverture min.</td><td>Course utile minimum</td><td>8 mm</td></tr>
+        <tr><td>Lamelles / mâchoire</td><td>Indépendantes, déplacement axial</td><td>12</td></tr>
+        <tr><td>Course lamelle</td><td>Amplitude d'adaptation</td><td>±22 mm</td></tr>
+        <tr><td>Force de serrage</td><td>Nominale / pic maximum</td><td>25 kN / 40 kN</td></tr>
+        <tr><td>Répétabilité</td><td>Écart entre deux serrages</td><td>± 0.02 mm</td></tr>
+        <tr><td>Matériau corps</td><td>Acier traité thermiquement</td><td>42CrMo4 · HRC 52</td></tr>
+        <tr><td>Masse</td><td>Corps + mâchoires</td><td>18.4 kg</td></tr>
+        <tr><td>Interface</td><td>Rainure T standard</td><td>DIN 650</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTEURS -->
+<section class="sec sec-mid" id="appli">
+  <div class="eyebrow">Secteurs</div>
+  <h2 class="sec-title">Pour qui ?</h2>
+  <p class="sec-lead">Le VarioGrip est utile partout où l'on doit brider des pièces de formes variées, sans passer du temps à les caler ou à changer de mors.</p>
+  <div class="app-grid">
+    <div class="app-card"><div class="app-icon">✈️</div><h4>Aéronautique</h4><p>Pièces complexes en titane ou composite, profils gauches, sans risque de déformation.</p></div>
+    <div class="app-card"><div class="app-icon">🚗</div><h4>Automobile</h4><p>Production en petites séries variées, changement rapide de pièce à pièce.</p></div>
+    <div class="app-card"><div class="app-icon">⚕️</div><h4>Médical</h4><p>Micro-pièces aux formes précises, sans marque de serrage sur les surfaces.</p></div>
+    <div class="app-card"><div class="app-icon">⚙️</div><h4>Mécanique générale</h4><p>Tout atelier travaillant des pièces variées sur fraiseuse ou perceuse à colonne.</p></div>
+  </div>
+</section>
+
+<div class="final-cta">
+  <div><h2>Offre de lancement : −30%<br/>jusqu'au 31 juillet 2026.</h2><p>Livraison offerte dès 2 unités · Garantie 3 ans · Retour 30 jours</p></div>
+  <button class="btn-white" onclick="goShop()">Voir l'offre →</button>
+</div>
+<footer>
+  <div class="foot-brand"><span>Vario</span>Grip</div>
+  <div class="foot-meta">VarioGrip · Fiche produit · 2026<br/>Projet BUT GMP · Communication<br/><span style="color:var(--orange)">commercial@variogrip.fr</span></div>
+</footer>
+</div>
+
+<!-- ══ PAGE BOUTIQUE ══ -->
+<div id="page-shop" class="page">
+<div class="promo-bar" id="promoBar">
+  <strong>OFFRE LANCEMENT −30%</strong>
+  <span style="opacity:.5">|</span> Expire dans :
+  <div class="cd-wrap">
+    <div class="cd-b" id="cd-d">--</div><span style="font-weight:900;margin:0 2px">j</span>
+    <div class="cd-b" id="cd-h">--</div><span style="font-weight:900;margin:0 2px">h</span>
+    <div class="cd-b" id="cd-m">--</div><span style="font-weight:900;margin:0 2px">m</span>
+    <div class="cd-b" id="cd-s">--</div><span style="font-weight:900;margin:0 2px">s</span>
+  </div>
+  <span style="opacity:.5">|</span> Port offert dès 2 unités
+</div>
+
+<div class="shop-hero">
+  <div class="shop-img-wrap">
+    <div style="position:relative">
+      <canvas id="viseShop" style="width:100%;display:block;border-radius:4px;border:1px solid rgba(255,255,255,.08)"></canvas>
+      <div class="bdg-new">Nouveau</div>
+      <div class="bdg-pct">−30%</div>
+    </div>
+    <div class="shop-img-caption">VarioGrip · Étau adaptatif · Toutes géométries</div>
+  </div>
+  <div>
+    <div class="prod-eyebrow">Étau adaptatif industriel · 2026</div>
+    <h1 class="prod-title">VarioGrip</h1>
+    <div class="prod-sub">Lamelles indépendantes · Blocage hydraulique · DIN 650</div>
+    <div class="prod-desc">Le seul étau qui s'adapte automatiquement à la forme de votre pièce. Cylindrique, hexagonale, profilée ou irrégulière — posez la pièce, serrez la vis, c'est fait. Aucun mors dédié, aucun réglage, une précision de ±0,02 mm.</div>
+    <div class="rating-row">
+      <span class="stars">★★★★★</span>
+      <span class="r-count">4.9/5 · 47 avis</span>
+      <span class="r-verif">✓ Vérifié</span>
+    </div>
+    <div class="price-box">
+      <div class="price-row2">
+        <span class="p-old">4 990 €</span>
+        <span class="p-new">3 493<span> €</span></span>
+      </div>
+      <div class="p-save">Vous économisez 1 497 € · −30% offre de lancement</div>
+      <div class="p-ht">Prix HT · TVA 20% en sus · Livraison 5–10 jours ouvrés</div>
+    </div>
+    <div class="opt-sec">
+      <div class="opt-lbl">Ouverture des mâchoires</div>
+      <div class="opt-btns">
+        <button class="opt-btn active">125 mm</button>
+        <button class="opt-btn">200 mm</button>
+        <button class="opt-btn">250 mm <span style="font-size:.68rem;color:var(--orange)">+380€</span></button>
+      </div>
+    </div>
+    <div class="add-row">
+      <div class="qty-wrap">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-val" id="qtyVal">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <button class="btn-add" onclick="addCart()">Ajouter au panier · 3 493 €</button>
+    </div>
+    <button class="btn-quote2">Demander un devis (volume / collectivités)</button>
+    <div class="trust-row">
+      <div class="tr-item"><span class="tr-icon">🚚</span><span class="tr-lbl">Port offert</span><span class="tr-sub">dès 2 unités</span></div>
+      <div class="tr-item"><span class="tr-icon">🔄</span><span class="tr-lbl">Retour 30j</span><span class="tr-sub">remboursé</span></div>
+      <div class="tr-item"><span class="tr-icon">🛡️</span><span class="tr-lbl">Garantie 3 ans</span><span class="tr-sub">pièces & MO</span></div>
+      <div class="tr-item"><span class="tr-icon">📞</span><span class="tr-lbl">Support</span><span class="tr-sub">Lun–Ven 8h–18h</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="urgency">
+  <div class="urg-icon">⚠️</div>
+  <div>
+    <h3>7 unités restantes au prix promotionnel</h3>
+    <p>L'offre −30% est valable jusqu'au 31 juillet 2026. Commandes avant 12h expédiées le jour même.</p>
+    <div class="stock-bg"><div class="stock-fg"></div></div>
+    <p style="font-size:.7rem;color:var(--orange);margin-top:4px">■ 7 / 30 unités restantes</p>
+  </div>
+  <button class="btn-primary" onclick="addCart()">Commander →</button>
+</div>
+
+<section class="sec sec-mid" id="packs">
+  <div class="eyebrow">Offres groupées</div>
+  <h2 class="sec-title">Équipez plusieurs<br/>postes et économisez.</h2>
+  <p class="sec-lead">Plus vous commandez, plus vous économisez.</p>
+  <div class="pack-grid">
+    <div class="pack-card">
+      <div class="pack-name">Unitaire</div><div class="pack-desc">1 VarioGrip</div>
+      <div class="pack-old">4 990 €</div><div class="pack-price">3 493<span> €</span></div>
+      <div class="pack-saving">Économie : 1 497 € (−30%)</div>
+      <ul class="pack-feats"><li>1× VarioGrip</li><li>Notice de montage</li><li>Garantie 3 ans</li><li class="off">Frais de port : 95 €</li></ul>
+      <button class="pack-btn sec" onclick="addCart()">Sélectionner</button>
+    </div>
+    <div class="pack-card feat">
+      <div class="pack-feat-bdg">⭐ Le plus populaire</div>
+      <div class="pack-name">Duo Atelier</div><div class="pack-desc">2 VarioGrip</div>
+      <div class="pack-old">9 980 €</div><div class="pack-price">6 286<span> €</span></div>
+      <div class="pack-saving">Économie : 3 694 € (−37%) + port offert</div>
+      <ul class="pack-feats"><li>2× VarioGrip</li><li>Notice de montage</li><li>Garantie 3 ans</li><li style="color:var(--orange)">✦ Port offert</li></ul>
+      <button class="pack-btn prim" onclick="addCart()">Commander →</button>
+    </div>
+    <div class="pack-card">
+      <div class="pack-name">Ligne complète</div><div class="pack-desc">5 VarioGrip</div>
+      <div class="pack-old">24 950 €</div><div class="pack-price">14 470<span> €</span></div>
+      <div class="pack-saving">Économie : 10 480 € (−42%)</div>
+      <ul class="pack-feats"><li>5× VarioGrip</li><li>Notice de montage</li><li>Garantie 3 ans</li><li style="color:var(--orange)">✦ Port + installation inclus</li></ul>
+      <button class="pack-btn sec" onclick="addCart()">Demander un devis</button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="avis">
+  <div class="eyebrow">Avis clients</div>
+  <h2 class="sec-title">Ils l'ont adopté.</h2>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="t-stars">★★★★★</div><p class="t-text">On bride des pièces rondes depuis des années en calant avec des tasseaux. Avec le VarioGrip, on pose et on serre. C'est tout. Ça a changé notre façon de travailler.</p><div class="t-author"><div class="t-avatar">JM</div><div><div class="t-name">Jean-Marc Dupont</div><div class="t-role">Resp. production · Aéronautique, Toulouse</div></div></div></div>
+    <div class="testi-card"><div class="t-stars">★★★★★</div><p class="t-text">J'avais des pièces hexagonales qui glissaient systématiquement. Avec cet étau, elles sont maintenues parfaitement. La précision est vraiment au rendez-vous.</p><div class="t-author"><div class="t-avatar">SL</div><div><div class="t-name">Sophie Laurent</div><div class="t-role">Technicienne CN · Médical, Lyon</div></div></div></div>
+    <div class="testi-card"><div class="t-stars">★★★★☆</div><p class="t-text">Idéal pour notre production en petites séries variées. On passe d'une géométrie à l'autre sans rien changer sur la machine. Retour sur investissement très rapide.</p><div class="t-author"><div class="t-avatar">PB</div><div><div class="t-name">Pierre Bergeron</div><div class="t-role">Chef d'atelier · Auto, Valenciennes</div></div></div></div>
+  </div>
+</section>
+
+<section class="sec sec-mid" id="faq">
+  <div class="eyebrow">Questions fréquentes</div>
+  <h2 class="sec-title">Vous avez des questions ?</h2>
+  <div class="faq-list">
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Le VarioGrip remplace-t-il vraiment tous mes mors spéciaux ? <span class="faq-chev">▼</span></button><div class="faq-a">Oui. Grâce aux lamelles indépendantes qui épousent le contour de la pièce, le VarioGrip serre efficacement les formes cylindriques, hexagonales, prismatiques, profilées ou irrégulières. Dans la grande majorité des cas, il supprime le besoin de mors dédiés.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Est-il compatible avec ma fraiseuse / perceuse à colonne ? <span class="faq-chev">▼</span></button><div class="faq-a">Le VarioGrip utilise l'interface standard DIN 650 (rainure T). Il se monte exactement comme n'importe quel étau de machine, sur fraiseuse, perceuse à colonne ou sensitive, sans aucune modification.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Jusqu'à quand dure l'offre −30% ? <span class="faq-chev">▼</span></button><div class="faq-a">L'offre est valable jusqu'au 31 juillet 2026, ou jusqu'à épuisement des 30 unités au tarif promotionnel.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Que couvre la garantie 3 ans ? <span class="faq-chev">▼</span></button><div class="faq-a">Corps, lamelles adaptatives et système de blocage. Main d'œuvre et pièces de remplacement incluses. L'usure normale des surfaces est exclue.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Puis-je retourner le produit si il ne me convient pas ? <span class="faq-chev">▼</span></button><div class="faq-a">30 jours à compter de la réception pour retourner le VarioGrip en parfait état. Remboursement intégral sous 5 jours ouvrés.</div></div>
+  </div>
+</section>
+
+<div class="final-cta">
+  <div><h2>Ne ratez pas l'offre de lancement.<br/>−30% jusqu'au 31 juillet 2026.</h2><p>Livraison offerte dès 2 unités · Garantie 3 ans · Retour 30 jours</p></div>
+  <button class="btn-white" onclick="addCart()">Commander maintenant →</button>
+</div>
+<footer>
+  <div class="foot-brand"><span>Vario</span>Grip</div>
+  <div class="foot-meta">VarioGrip · Page commerciale · 2026<br/>Projet BUT GMP · Communication<br/><span style="color:var(--orange)">commercial@variogrip.fr</span></div>
+</footer>
+</div>
+
+<div class="toast" id="toast">✓ Produit ajouté au panier !</div>
+
+<script>
+/* NAV */
+function goPres(){document.getElementById('page-pres').classList.add('active');document.getElementById('page-shop').classList.remove('active');document.getElementById('promoBar').style.display='none';scrollTo(0,0);}
+function goShop(){document.getElementById('page-shop').classList.add('active');document.getElementById('page-pres').classList.remove('active');document.getElementById('promoBar').style.display='flex';scrollTo(0,0);}
+
+/* COUNTDOWN */
+(function tick(){
+  const d=Math.max(0,new Date('2026-07-31T23:59:59').getTime()-Date.now());
+  const p=n=>String(n).padStart(2,'0');
+  document.getElementById('cd-d').textContent=p(Math.floor(d/86400000));
+  document.getElementById('cd-h').textContent=p(Math.floor(d%86400000/3600000));
+  document.getElementById('cd-m').textContent=p(Math.floor(d%3600000/60000));
+  document.getElementById('cd-s').textContent=p(Math.floor(d%60000/1000));
+  if(d>0)setTimeout(tick,1000);
+})();
+
+/* CART/QTY */
+let qty=1;
+function changeQty(d){qty=Math.max(1,Math.min(99,qty+d));document.getElementById('qtyVal').textContent=qty;}
+function addCart(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+document.querySelectorAll('.opt-btns').forEach(g=>{g.querySelectorAll('.opt-btn').forEach(b=>{b.addEventListener('click',function(){g.querySelectorAll('.opt-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');});});});
+function toggleFaq(btn){const a=btn.nextElementSibling,ch=btn.querySelector('.faq-chev'),o=a.classList.contains('open');document.querySelectorAll('.faq-a').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.faq-chev').forEach(x=>x.classList.remove('open'));if(!o){a.classList.add('open');ch.classList.add('open');}}
+
+/* ══════════════════════════════════════════
+   SCHÉMA DÉMO — étau avec lamelles
+   Les deux mâchoires plates se ferment
+   et les lamelles épousent le contour
+══════════════════════════════════════════ */
+const dC=document.getElementById('demoCanvas'),dX=dC.getContext('2d');
+const TOTAL=40;
+const SCENES=[
+  {lbl:'Pièce cylindrique', dur:8, shape:'cyl'},
+  {lbl:'Pièce hexagonale',  dur:8, shape:'hex'},
+  {lbl:'Profil en L',       dur:8, shape:'lshape'},
+  {lbl:'Pièce circulaire alésoée', dur:8, shape:'disc'},
+  {lbl:'Forme irrégulière', dur:8, shape:'free'},
+];
+let playing=false,paused=false,elapsed=0,t0=null,rafId=null;
+
+function dResize(){const w=dC.parentElement.clientWidth;dC.width=w;dC.height=Math.round(w*0.5625);}
+dResize();window.addEventListener('resize',()=>{dResize();if(!playing)dIdle();});
+
+function getScene(t){let a=0;for(const s of SCENES){if(t<a+s.dur)return{s,loc:t-a,p:(t-a)/s.dur};a+=s.dur;}return{s:SCENES[4],loc:8,p:1};}
+
+// Retourne le profil de la pièce : tableau de {y, halfW} pour N points
+function getPieceProfile(shape,N,cy,pH,pW){
+  return Array.from({length:N},(_,i)=>{
+    const t=i/(N-1), y=cy-pH/2+t*pH;
+    let hw;
+    switch(shape){
+      case 'cyl': hw=pW*Math.sqrt(Math.max(0,1-Math.pow((t-0.5)/0.5,2))); break;
+      case 'hex':{
+        // Hexagone régulier : approximation par segments
+        const angle=(t*6)%1, seg=Math.floor(t*6)%6;
+        const r1=[1,.87,.5,.5,.87,1][seg], r2=[.87,.5,.5,.87,1,1][seg];
+        hw=pW*(r1+(r2-r1)*angle)*0.90; break;
+      }
+      case 'lshape': hw=t<0.5?pW*0.90:pW*0.42; break;
+      case 'disc': hw=pW*Math.sqrt(Math.max(0,1-Math.pow((t-0.5)/0.5,2)))*0.94; break;
+      case 'free':{
+        const pts=[.7,.9,.55,1.0,.82,1.05,.65,.88,.72,.95,.60,.80];
+        const idx=i%pts.length; hw=pW*pts[idx]*0.88; break;
+      }
+      default: hw=pW*0.8;
+    }
+    return {y, halfW:Math.max(3,hw)};
+  });
+}
+
+function drawFrame(t){
+  const W=dC.width,H=dC.height;
+  const{s,loc,p}=getScene(t);
+  // Fond
+  dX.fillStyle='#060810';dX.fillRect(0,0,W,H);
+  dX.strokeStyle='rgba(43,92,230,0.05)';dX.lineWidth=1;
+  for(let x=0;x<W;x+=38){dX.beginPath();dX.moveTo(x,0);dX.lineTo(x,H);dX.stroke();}
+  for(let y=0;y<H;y+=38){dX.beginPath();dX.moveTo(0,y);dX.lineTo(W,y);dX.stroke();}
+
+  const cx=W/2,cy=H*0.44;
+  const N=14;
+  const jawH=H*0.55,jawW=W*0.22;
+  const pW=W*0.10,pH=jawH*0.88;
+
+  // Phases : 0-15% ouvert, 15-45% fermeture, 45-85% adaptation lamelles, 85-100% ouverture
+  let openAmt,adaptAmt;
+  if(p<0.15){openAmt=1;adaptAmt=0;}
+  else if(p<0.44){openAmt=1-(p-0.15)/0.29;adaptAmt=0;}
+  else if(p<0.72){openAmt=0;adaptAmt=(p-0.44)/0.28;}
+  else if(p<0.88){openAmt=0;adaptAmt=1;}
+  else{openAmt=(p-0.88)/0.12;adaptAmt=1;}
+
+  const baseGap=W*0.19,closeGap=pW+W*0.005;
+  const gap=closeGap+(baseGap-closeGap)*openAmt;
+  const LX=cx-gap-jawW, RX=cx+gap;
+  const JY=cy-jawH/2;
+
+  const profile=getPieceProfile(s.shape,N,cy,pH,pW);
+  const slotH=jawH/N;
+  const lamelleD=jawW*0.28; // profondeur max d'une lamelle
+
+  function drawJaw(jx,jy,side){
+    const faceX=side==='L'?jx+jawW:jx;
+
+    // Corps principal de la mâchoire (rectangulaire, comme un vrai étau)
+    const g=dX.createLinearGradient(jx,jy,jx,jy+jawH);
+    g.addColorStop(0,'#4a5468');g.addColorStop(0.4,'#323b4e');g.addColorStop(1,'#1e2535');
+    dX.fillStyle=g;
+    dX.fillRect(jx,jy,jawW,jawH);
+    // Bordures
+    dX.strokeStyle='rgba(255,255,255,0.12)';dX.lineWidth=1;
+    dX.strokeRect(jx+.5,jy+.5,jawW-1,jawH-1);
+    // Reflet haut
+    const shine=dX.createLinearGradient(jx,jy,jx,jy+jawH*0.28);
+    shine.addColorStop(0,'rgba(255,255,255,0.09)');shine.addColorStop(1,'rgba(255,255,255,0)');
+    dX.fillStyle=shine;dX.fillRect(jx,jy,jawW,jawH*0.28);
+
+    // Vis / boulons décoratifs sur le corps
+    [[0.25,0.15],[0.75,0.15],[0.25,0.85],[0.75,0.85]].forEach(([tx,ty])=>{
+      const bx=jx+jawW*tx, by=jy+jawH*ty;
+      dX.fillStyle='#2a3040';dX.beginPath();dX.arc(bx,by,jawW*0.05,0,Math.PI*2);dX.fill();
+      dX.strokeStyle='rgba(255,255,255,0.15)';dX.lineWidth=1;dX.beginPath();dX.arc(bx,by,jawW*0.05,0,Math.PI*2);dX.stroke();
+      // Fente vis
+      dX.strokeStyle='rgba(255,255,255,0.2)';dX.lineWidth=1.5;
+      dX.beginPath();dX.moveTo(bx-jawW*0.03,by);dX.lineTo(bx+jawW*0.03,by);dX.stroke();
+    });
+
+    // Rainures horizontales (aspect mâchoire usinée)
+    for(let i=0;i<5;i++){
+      const ry=jy+jawH*0.2+i*(jawH*0.14);
+      dX.strokeStyle='rgba(0,0,0,0.3)';dX.lineWidth=1;
+      dX.beginPath();dX.moveTo(jx+2,ry);dX.lineTo(jx+jawW-2,ry);dX.stroke();
+    }
+
+    // Zone des lamelles (face active, côté pièce)
+    const lamZoneW=lamelleD+6;
+    const lamZoneX=side==='L'?faceX-lamZoneW:faceX;
+    dX.fillStyle='rgba(8,10,18,0.65)';
+    dX.fillRect(lamZoneX,jy,lamZoneW,jawH);
+    dX.strokeStyle='rgba(255,255,255,0.06)';dX.lineWidth=1;
+    dX.strokeRect(lamZoneX,jy,lamZoneW,jawH);
+
+    // LAMELLES — chacune suit précisément le profil de la pièce
+    for(let i=0;i<N;i++){
+      const prof=profile[i];
+      const fy=jy+i*slotH;
+      const fh=slotH-1;
+
+      // Distance du bord de la mâchoire à la surface de la pièce
+      const pieceEdge=side==='L'?cx-prof.halfW:cx+prof.halfW;
+      const dist=Math.abs(faceX-pieceEdge);
+      // En position neutre, toutes les lamelles dépassent de la même quantité
+      const neutralOut=lamelleD*0.3;
+      // Quand adaptées, elles sortent juste assez pour toucher la pièce
+      const targetOut=Math.max(2,Math.min(lamelleD*0.95, lamelleD - dist + pW*0.05));
+      const currentOut=neutralOut+(targetOut-neutralOut)*adaptAmt;
+
+      // Lamelle (sort vers la pièce)
+      const lamW=Math.max(2,currentOut);
+      const lamX=side==='L'?faceX-lamW:faceX;
+      const lGrad=dX.createLinearGradient(lamX,0,lamX+lamW,0);
+      const alpha=0.7+0.3*(currentOut/lamelleD);
+      if(side==='L'){
+        lGrad.addColorStop(0,`rgba(160,80,10,${alpha*0.6})`);
+        lGrad.addColorStop(1,`rgba(232,97,10,${alpha})`);
+      } else {
+        lGrad.addColorStop(0,`rgba(232,97,10,${alpha})`);
+        lGrad.addColorStop(1,`rgba(160,80,10,${alpha*0.6})`);
+      }
+      dX.fillStyle=lGrad;
+      dX.fillRect(lamX,fy+1,lamW,fh-2);
+
+      // Highlight tip de la lamelle
+      if(lamW>5){
+        const tipX=side==='L'?lamX+lamW-3:lamX;
+        dX.fillStyle='rgba(255,180,80,0.35)';
+        dX.fillRect(tipX,fy+fh*0.2,3,fh*0.6);
+      }
+
+      // Séparateur entre lamelles
+      dX.strokeStyle='rgba(0,0,0,0.5)';dX.lineWidth=1;
+      dX.beginPath();dX.moveTo(lamZoneX,fy);dX.lineTo(lamZoneX+lamZoneW,fy);dX.stroke();
+    }
+
+    // Trait de contact quand serré
+    if(adaptAmt>0.7&&openAmt<0.05){
+      const ca=Math.min(1,(adaptAmt-0.7)/0.3)*0.5;
+      dX.globalAlpha=ca;
+      dX.strokeStyle='#2B5CE6';dX.lineWidth=1.5;dX.setLineDash([3,4]);
+      const cx2=side==='L'?faceX:faceX;
+      dX.beginPath();
+      profile.forEach((pr,i)=>{
+        const px=side==='L'?cx-pr.halfW:cx+pr.halfW;
+        i===0?dX.moveTo(cx2,pr.y):dX.lineTo(cx2,pr.y);
+      });
+      dX.stroke();dX.setLineDash([]);dX.globalAlpha=1;
+    }
+  }
+
+  drawJaw(LX,JY,'L');
+  drawJaw(RX,JY,'R');
+
+  // Corps / socle de l'étau (base rectangulaire)
+  const bY=JY+jawH;
+  const baseH=H*0.1;
+  const bg2=dX.createLinearGradient(0,bY,0,bY+baseH);
+  bg2.addColorStop(0,'#2e3748');bg2.addColorStop(1,'#1a2030');
+  dX.fillStyle=bg2;dX.fillRect(cx-W*0.42,bY,W*0.84,baseH);
+  dX.strokeStyle='rgba(255,255,255,0.07)';dX.lineWidth=1;
+  dX.strokeRect(cx-W*0.42+.5,bY+.5,W*0.84-1,baseH-1);
+  // Rail / vis centrale
+  dX.fillStyle='#111827';dX.fillRect(cx-W*0.35,bY+baseH*0.25,W*0.70,baseH*0.35);
+  dX.fillStyle='rgba(43,92,230,0.45)';dX.fillRect(cx-W*0.33,bY+baseH*0.30,W*0.66,baseH*0.15);
+  // Bouton manivelle
+  dX.fillStyle='#E8610A';
+  dX.beginPath();dX.ellipse(cx,bY+baseH*0.5,W*0.03,baseH*0.28,0,0,Math.PI*2);dX.fill();
+  dX.fillStyle='rgba(255,160,60,0.6)';
+  dX.beginPath();dX.ellipse(cx-W*0.008,bY+baseH*0.38,W*0.01,baseH*0.1,0,0,Math.PI*2);dX.fill();
+
+  // PIÈCE
+  if(p>0.12&&p<0.96){
+    const pA=p<0.20?(p-0.12)/0.08:p>0.88?1-(p-0.88)/0.08:1;
+    dX.globalAlpha=pA;
+    drawPiece(cx,cy,s.shape,pW,pH);
+    dX.globalAlpha=1;
+  }
+
+  // HUD — nom de la scène
+  dX.fillStyle='rgba(0,0,0,0.6)';dX.beginPath();dX.roundRect(14,14,W*0.48,H*0.13,3);dX.fill();
+  dX.fillStyle='#E8610A';dX.font=`600 ${H*0.022}px Inter`;dX.textAlign='left';dX.textBaseline='middle';
+  dX.fillText('VARIOGRIP  ·  SCHÉMA DE PRINCIPE',26,14+H*0.032);
+  dX.fillStyle='#C4C8D0';dX.font=`700 ${H*0.034}px Barlow Condensed,sans-serif`;
+  dX.fillText(s.lbl.toUpperCase(),26,14+H*0.087);
+
+  // Timer
+  dX.fillStyle='rgba(0,0,0,0.55)';dX.beginPath();dX.roundRect(W-118,14,104,H*0.09,3);dX.fill();
+  dX.fillStyle='#2B5CE6';dX.font=`700 ${H*0.036}px Barlow Condensed,sans-serif`;dX.textAlign='center';
+  dX.fillText(`${Math.floor(loc)}s / ${s.dur}s`,W-66,14+H*0.048);
+
+  // Status
+  let st,sc;
+  if(openAmt>0.5){st='MÂCHOIRES OUVERTES';sc='#8A929E';}
+  else if(adaptAmt<0.3){st='FERMETURE EN COURS...';sc='#C4C8D0';}
+  else if(adaptAmt<0.95){st='LAMELLES EN CONTACT...';sc='#E8610A';}
+  else{st='PIÈCE BRIDÉE ✓';sc='#22c55e';}
+  const tw=dX.measureText(st).width+28;
+  dX.fillStyle='rgba(0,0,0,0.65)';dX.beginPath();dX.roundRect(W/2-tw/2,H-H*0.13,tw,H*0.09,3);dX.fill();
+  dX.fillStyle=sc;dX.font=`600 ${H*0.028}px Inter`;dX.textAlign='center';
+  dX.fillText(st,W/2,H-H*0.085);
+
+  // Progress UI
+  document.getElementById('pFill').style.width=(Math.min(t/TOTAL,1)*100)+'%';
+  const sec=Math.floor(t);document.getElementById('tLbl').textContent=`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')} / 0:40`;
+}
+
+function drawPiece(cx,cy,shape,pw,ph){
+  dX.fillStyle='#8090a8';dX.strokeStyle='rgba(255,255,255,0.2)';dX.lineWidth=1.5;
+  switch(shape){
+    case 'cyl':
+      dX.beginPath();dX.ellipse(cx,cy,pw,ph/2,0,0,Math.PI*2);dX.fill();dX.stroke();
+      dX.fillStyle='rgba(255,255,255,0.08)';dX.beginPath();dX.ellipse(cx-pw*0.22,cy-ph*0.08,pw*0.16,ph*0.28,0,0,Math.PI*2);dX.fill();
+      break;
+    case 'hex':
+      dX.beginPath();
+      for(let i=0;i<6;i++){const a=Math.PI/6+i*Math.PI/3;i===0?dX.moveTo(cx+pw*Math.cos(a),cy+ph/2*Math.sin(a)):dX.lineTo(cx+pw*Math.cos(a),cy+ph/2*Math.sin(a));}
+      dX.closePath();dX.fill();dX.stroke();
+      break;
+    case 'lshape':
+      dX.beginPath();
+      dX.moveTo(cx-pw,cy-ph/2);dX.lineTo(cx+pw*.22,cy-ph/2);
+      dX.lineTo(cx+pw*.22,cy+ph*.06);dX.lineTo(cx+pw,cy+ph*.06);
+      dX.lineTo(cx+pw,cy+ph/2);dX.lineTo(cx-pw,cy+ph/2);
+      dX.closePath();dX.fill();dX.stroke();break;
+    case 'disc':
+      dX.beginPath();dX.ellipse(cx,cy,pw,ph/2,0,0,Math.PI*2);dX.fill();dX.stroke();
+      dX.fillStyle='#111827';dX.beginPath();dX.ellipse(cx,cy,pw*.38,ph*.19,0,0,Math.PI*2);dX.fill();
+      dX.strokeStyle='rgba(255,255,255,0.1)';dX.lineWidth=1;dX.beginPath();dX.ellipse(cx,cy,pw*.38,ph*.19,0,0,Math.PI*2);dX.stroke();
+      break;
+    case 'free':{
+      const ps=[{a:0,r:.78},{a:44,r:1.0},{a:90,r:.60},{a:134,r:1.02},{a:178,r:.84},{a:222,r:1.06},{a:266,r:.68},{a:310,r:.92}];
+      dX.beginPath();ps.forEach((pt,i)=>{const rad=pt.a*Math.PI/180;i===0?dX.moveTo(cx+pw*pt.r*Math.cos(rad),cy+ph/2*pt.r*Math.sin(rad)):dX.lineTo(cx+pw*pt.r*Math.cos(rad),cy+ph/2*pt.r*Math.sin(rad));});
+      dX.closePath();dX.fill();dX.stroke();break;
+    }
+  }
+}
+
+function dIdle(){
+  const W=dC.width,H=dC.height;
+  dX.fillStyle='#060810';dX.fillRect(0,0,W,H);
+  dX.strokeStyle='rgba(43,92,230,0.05)';dX.lineWidth=1;
+  for(let x=0;x<W;x+=38){dX.beginPath();dX.moveTo(x,0);dX.lineTo(x,H);dX.stroke();}
+  for(let y=0;y<H;y+=38){dX.beginPath();dX.moveTo(0,y);dX.lineTo(W,y);dX.stroke();}
+  dX.font=`900 italic ${H*0.09}px Barlow Condensed,sans-serif`;
+  dX.textAlign='center';dX.textBaseline='middle';dX.fillStyle='rgba(255,255,255,0.04)';
+  dX.fillText('VARIOGRIP',W/2,H/2-H*0.05);
+  dX.font=`400 ${H*0.036}px Inter`;dX.fillStyle='rgba(232,97,10,0.45)';
+  dX.fillText('Appuyez sur ▶ pour lancer le schéma',W/2,H/2+H*0.05);
+}
+dIdle();
+
+function dLoop(ts){elapsed=(ts-t0)/1000;if(elapsed>=TOTAL){elapsed=TOTAL;drawFrame(elapsed);playing=false;document.getElementById('ppBtn').textContent='▶';return;}drawFrame(elapsed);rafId=requestAnimationFrame(dLoop);}
+function startDemo(){document.getElementById('playOverlay').style.display='none';playing=true;paused=false;elapsed=0;t0=performance.now();document.getElementById('ppBtn').textContent='⏸';rafId=requestAnimationFrame(dLoop);}
+function togglePlay(){if(!playing){startDemo();return;}if(paused){paused=false;t0=performance.now()-elapsed*1000;rafId=requestAnimationFrame(dLoop);document.getElementById('ppBtn').textContent='⏸';}else{paused=true;cancelAnimationFrame(rafId);document.getElementById('ppBtn').textContent='▶';}}
+function restartDemo(){cancelAnimationFrame(rafId);elapsed=0;paused=false;playing=true;t0=performance.now();document.getElementById('ppBtn').textContent='⏸';document.getElementById('playOverlay').style.display='none';rafId=requestAnimationFrame(dLoop);}
+function seekDemo(e){const b=e.currentTarget,r=(e.clientX-b.getBoundingClientRect().left)/b.offsetWidth;elapsed=r*TOTAL;if(!paused&&playing)t0=performance.now()-elapsed*1000;drawFrame(elapsed);}
+
+/* ══════════════════════════════════════════
+   RENDU RÉALISTE ÉTAU DE FRAISAGE
+   Vue 3/4 perspective, éclairage photoréaliste
+══════════════════════════════════════════ */
+function drawRealisticVise(canvasEl, W, H) {
+  canvasEl.width = W;
+  canvasEl.height = H;
+  const c = canvasEl.getContext('2d');
+
+  // ── Fond atelier ──
+  const bgGrad = c.createLinearGradient(0, 0, 0, H);
+  bgGrad.addColorStop(0, '#1a1e28');
+  bgGrad.addColorStop(0.6, '#141820');
+  bgGrad.addColorStop(1, '#0c0e14');
+  c.fillStyle = bgGrad;
+  c.fillRect(0, 0, W, H);
+
+  // Surface de la table (plans métallique)
+  const tableGrad = c.createLinearGradient(0, H * 0.72, 0, H);
+  tableGrad.addColorStop(0, '#2a2f3e');
+  tableGrad.addColorStop(1, '#181c26');
+  c.fillStyle = tableGrad;
+  c.fillRect(0, H * 0.72, W, H * 0.28);
+  // Reflet surface table
+  c.fillStyle = 'rgba(255,255,255,0.025)';
+  c.fillRect(W * 0.1, H * 0.72, W * 0.5, 2);
+
+  // Lumière ambiante (halo sur le produit)
+  const halo = c.createRadialGradient(W * 0.5, H * 0.45, 20, W * 0.5, H * 0.45, W * 0.55);
+  halo.addColorStop(0, 'rgba(200,210,255,0.07)');
+  halo.addColorStop(1, 'rgba(0,0,0,0)');
+  c.fillStyle = halo;
+  c.fillRect(0, 0, W, H);
+
+  // Ombre portée au sol
+  const shadow = c.createRadialGradient(W * 0.5, H * 0.74, 10, W * 0.5, H * 0.74, W * 0.42);
+  shadow.addColorStop(0, 'rgba(0,0,0,0.55)');
+  shadow.addColorStop(1, 'rgba(0,0,0,0)');
+  c.fillStyle = shadow;
+  c.ellipse(W * 0.5, H * 0.76, W * 0.38, H * 0.06, 0, 0, Math.PI * 2);
+  c.fill();
+
+  // ── Helpers ──
+  function rr(x, y, w, h, r) {
+    c.beginPath(); c.roundRect(x, y, w, h, r); c.fill();
+  }
+  function rrS(x, y, w, h, r) {
+    c.beginPath(); c.roundRect(x, y, w, h, r); c.stroke();
+  }
+
+  // ── Dimensions de l'étau ──
+  const bx = W * 0.08, bw = W * 0.84;
+  const baseY = H * 0.60, baseH = H * 0.15;
+  const bodyY = H * 0.38, bodyH = H * 0.25;
+  const jawH = H * 0.30, jawW = W * 0.20;
+  const jawY = H * 0.30;
+  const gap = W * 0.18; // espace entre les mâchoires
+  const centerX = W * 0.5;
+
+  // ── SOCLE / BASE (plaque inférieure) ──
+  // Face avant du socle
+  const socleGrad = c.createLinearGradient(bx, baseY, bx, baseY + baseH);
+  socleGrad.addColorStop(0, '#5a6272');
+  socleGrad.addColorStop(0.3, '#3e4558');
+  socleGrad.addColorStop(1, '#2a303e');
+  c.fillStyle = socleGrad;
+  c.shadowColor = 'rgba(0,0,0,0.6)';
+  c.shadowBlur = 20;
+  c.shadowOffsetY = 8;
+  rr(bx, baseY, bw, baseH, 3);
+  c.shadowBlur = 0; c.shadowOffsetY = 0;
+
+  // Reflet haut du socle
+  const socleRef = c.createLinearGradient(bx, baseY, bx, baseY + baseH * 0.3);
+  socleRef.addColorStop(0, 'rgba(255,255,255,0.12)');
+  socleRef.addColorStop(1, 'rgba(255,255,255,0)');
+  c.fillStyle = socleRef;
+  rr(bx + 1, baseY + 1, bw - 2, baseH * 0.3, 3);
+
+  // Rainures T du socle (2 rainures visibles)
+  c.fillStyle = '#1a1e28';
+  rr(bx + bw * 0.22, baseY + baseH * 0.28, bw * 0.22, baseH * 0.28, 2);
+  rr(bx + bw * 0.56, baseY + baseH * 0.28, bw * 0.22, baseH * 0.28, 2);
+  // Bords brillants des rainures
+  c.strokeStyle = 'rgba(255,255,255,0.08)';
+  c.lineWidth = 1;
+  rrS(bx + bw * 0.22, baseY + baseH * 0.28, bw * 0.22, baseH * 0.28, 2);
+  rrS(bx + bw * 0.56, baseY + baseH * 0.28, bw * 0.22, baseH * 0.28, 2);
+
+  // ── CORPS CENTRAL de l'étau ──
+  const bodyGrad = c.createLinearGradient(bx, bodyY, bx + bw, bodyY);
+  bodyGrad.addColorStop(0, '#4a5268');
+  bodyGrad.addColorStop(0.15, '#6a7488');
+  bodyGrad.addColorStop(0.5, '#545e74');
+  bodyGrad.addColorStop(0.85, '#6a7488');
+  bodyGrad.addColorStop(1, '#4a5268');
+  c.fillStyle = bodyGrad;
+  c.shadowColor = 'rgba(0,0,0,0.4)';
+  c.shadowBlur = 12;
+  rr(bx, bodyY, bw, bodyH, 2);
+  c.shadowBlur = 0;
+
+  // Reflet haut du corps
+  const bodyRef = c.createLinearGradient(bx, bodyY, bx, bodyY + bodyH * 0.35);
+  bodyRef.addColorStop(0, 'rgba(255,255,255,0.14)');
+  bodyRef.addColorStop(1, 'rgba(255,255,255,0)');
+  c.fillStyle = bodyRef;
+  rr(bx + 2, bodyY + 1, bw - 4, bodyH * 0.35, 2);
+
+  // ── VIS CENTRALE (acier chromé) ──
+  const visY = bodyY + bodyH * 0.48;
+  const visR = H * 0.032;
+  // Corps de la vis (cylindre horizontal)
+  const visGrad = c.createLinearGradient(bx, visY - visR, bx, visY + visR);
+  visGrad.addColorStop(0, '#d0d8e8');
+  visGrad.addColorStop(0.35, '#f0f4fc');
+  visGrad.addColorStop(0.65, '#9aaabb');
+  visGrad.addColorStop(1, '#6a7888');
+  c.fillStyle = visGrad;
+  c.beginPath();
+  c.ellipse(centerX, visY, bw * 0.38, visR, 0, 0, Math.PI * 2);
+  c.fill();
+  // Filetage de la vis (petites lignes)
+  c.strokeStyle = 'rgba(80,90,110,0.5)';
+  c.lineWidth = 1;
+  for (let vx = centerX - bw * 0.35; vx < centerX + bw * 0.35; vx += W * 0.018) {
+    c.beginPath();
+    c.moveTo(vx, visY - visR + 2);
+    c.lineTo(vx + W * 0.008, visY + visR - 2);
+    c.stroke();
+  }
+
+  // Manivelle / poignée (côté droit)
+  const handleX = bx + bw + W * 0.02;
+  const handleY = visY;
+  // Bras horizontal
+  const armGrad = c.createLinearGradient(handleX, handleY - visR, handleX, handleY + visR);
+  armGrad.addColorStop(0, '#c8d0e0');
+  armGrad.addColorStop(0.5, '#e8ecf4');
+  armGrad.addColorStop(1, '#8898aa');
+  c.fillStyle = armGrad;
+  c.beginPath();
+  c.roundRect(bx + bw * 0.86, handleY - visR * 0.7, bw * 0.16, visR * 1.4, visR * 0.3);
+  c.fill();
+  // Bouton de la manivelle
+  const btnGrad = c.createRadialGradient(handleX - W * 0.01, handleY - H * 0.01, 1, handleX, handleY, visR * 1.5);
+  btnGrad.addColorStop(0, '#ff9944');
+  btnGrad.addColorStop(0.4, '#e8610a');
+  btnGrad.addColorStop(1, '#7a2800');
+  c.fillStyle = btnGrad;
+  c.beginPath();
+  c.ellipse(handleX, handleY, visR * 1.5, visR * 1.5, 0, 0, Math.PI * 2);
+  c.fill();
+  // Reflet bouton
+  c.fillStyle = 'rgba(255,200,120,0.4)';
+  c.beginPath();
+  c.ellipse(handleX - visR * 0.4, handleY - visR * 0.4, visR * 0.5, visR * 0.35, -0.5, 0, Math.PI * 2);
+  c.fill();
+
+  // ── MÂCHOIRE FIXE (gauche) ──
+  const fixedX = centerX - gap / 2 - jawW;
+  const jawGradFixed = c.createLinearGradient(fixedX, jawY, fixedX + jawW, jawY);
+  jawGradFixed.addColorStop(0, '#3a4050');
+  jawGradFixed.addColorStop(0.4, '#5a6272');
+  jawGradFixed.addColorStop(0.75, '#6a7480');
+  jawGradFixed.addColorStop(1, '#4a5260');
+  c.fillStyle = jawGradFixed;
+  c.shadowColor = 'rgba(0,0,0,0.5)';
+  c.shadowBlur = 15;
+  c.shadowOffsetX = -4;
+  rr(fixedX, jawY, jawW, jawH, 3);
+  c.shadowBlur = 0; c.shadowOffsetX = 0;
+
+  // Face active mâchoire fixe (face droite, texturée)
+  const faceFixed = c.createLinearGradient(fixedX + jawW - W * 0.025, jawY, fixedX + jawW, jawY);
+  faceFixed.addColorStop(0, '#2a2e38');
+  faceFixed.addColorStop(1, '#1e2230');
+  c.fillStyle = faceFixed;
+  rr(fixedX + jawW - W * 0.025, jawY + jawH * 0.05, W * 0.025, jawH * 0.9, 1);
+  // Stries sur la face active
+  c.strokeStyle = 'rgba(255,255,255,0.08)';
+  c.lineWidth = 1;
+  for (let sy = jawY + jawH * 0.1; sy < jawY + jawH * 0.9; sy += H * 0.022) {
+    c.beginPath();
+    c.moveTo(fixedX + jawW - W * 0.022, sy);
+    c.lineTo(fixedX + jawW, sy);
+    c.stroke();
+  }
+  // Reflet haut mâchoire fixe
+  const jfRef = c.createLinearGradient(fixedX, jawY, fixedX, jawY + jawH * 0.3);
+  jfRef.addColorStop(0, 'rgba(255,255,255,0.15)');
+  jfRef.addColorStop(1, 'rgba(255,255,255,0)');
+  c.fillStyle = jfRef;
+  rr(fixedX + 1, jawY + 1, jawW - 2, jawH * 0.3, 3);
+  // Bords mâchoire fixe
+  c.strokeStyle = 'rgba(255,255,255,0.10)';
+  c.lineWidth = 1;
+  rrS(fixedX + 0.5, jawY + 0.5, jawW - 1, jawH - 1, 3);
+
+  // Vis de fixation mors (2 vis hexagonales)
+  [[0.3, 0.25], [0.7, 0.25], [0.3, 0.75], [0.7, 0.75]].forEach(([tx, ty]) => {
+    const vx = fixedX + jawW * tx, vy = jawY + jawH * ty;
+    c.fillStyle = '#2a2e38';
+    c.beginPath(); c.arc(vx, vy, W * 0.018, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = 'rgba(180,190,210,0.3)';
+    c.lineWidth = 1;
+    c.beginPath(); c.arc(vx, vy, W * 0.018, 0, Math.PI * 2); c.stroke();
+    c.strokeStyle = 'rgba(180,190,210,0.5)';
+    c.lineWidth = 1.5;
+    c.beginPath(); c.moveTo(vx - W * 0.012, vy); c.lineTo(vx + W * 0.012, vy); c.stroke();
+    c.beginPath(); c.moveTo(vx, vy - W * 0.012); c.lineTo(vx, vy + W * 0.012); c.stroke();
+  });
+
+  // ── MÂCHOIRE MOBILE (droite) — avec lamelles adaptatrices ──
+  const mobileX = centerX + gap / 2;
+  const jawGradMobile = c.createLinearGradient(mobileX, jawY, mobileX + jawW, jawY);
+  jawGradMobile.addColorStop(0, '#4a5260');
+  jawGradMobile.addColorStop(0.25, '#6a7480');
+  jawGradMobile.addColorStop(0.6, '#5a6272');
+  jawGradMobile.addColorStop(1, '#3a4050');
+  c.fillStyle = jawGradMobile;
+  c.shadowColor = 'rgba(0,0,0,0.5)';
+  c.shadowBlur = 15;
+  c.shadowOffsetX = 4;
+  rr(mobileX, jawY, jawW, jawH, 3);
+  c.shadowBlur = 0; c.shadowOffsetX = 0;
+
+  // Face active mâchoire mobile (lamelles adaptatrices)
+  const lamelleCount = 10;
+  const lamelleH = jawH / lamelleCount;
+  // Profil irrégulier simulant une pièce ronde entre les mors
+  const depths = [4, 9, 15, 18, 19, 18, 15, 9, 4, 2].map(d => d * W * 0.001);
+  for (let i = 0; i < lamelleCount; i++) {
+    const ly = jawY + i * lamelleH;
+    const d = depths[i] || 0;
+    // Corps de la lamelle (renfoncement dans la mâchoire)
+    const lamGrad = c.createLinearGradient(mobileX, ly, mobileX + W * 0.03, ly);
+    lamGrad.addColorStop(0, '#1a1e28');
+    lamGrad.addColorStop(1, '#2e3448');
+    c.fillStyle = lamGrad;
+    rr(mobileX, ly + 1, W * 0.028, lamelleH - 2, 1);
+    // Partie active orange qui ressort
+    const orangeGrad = c.createLinearGradient(mobileX, ly, mobileX + W * 0.028 + d, ly);
+    orangeGrad.addColorStop(0, '#7a2800');
+    orangeGrad.addColorStop(0.6, '#e8610a');
+    orangeGrad.addColorStop(1, '#ff8844');
+    c.fillStyle = orangeGrad;
+    rr(mobileX, ly + lamelleH * 0.08, W * 0.025 + d, lamelleH * 0.84, 1);
+    // Reflet tip
+    c.fillStyle = 'rgba(255,180,80,0.3)';
+    rr(mobileX + W * 0.022 + d, ly + lamelleH * 0.15, 3, lamelleH * 0.7, 1);
+    // Séparateur
+    c.strokeStyle = 'rgba(0,0,0,0.45)';
+    c.lineWidth = 1;
+    c.beginPath();
+    c.moveTo(mobileX, ly);
+    c.lineTo(mobileX + W * 0.032, ly);
+    c.stroke();
+  }
+  // Reflet haut mâchoire mobile
+  const jmRef = c.createLinearGradient(mobileX, jawY, mobileX, jawY + jawH * 0.3);
+  jmRef.addColorStop(0, 'rgba(255,255,255,0.13)');
+  jmRef.addColorStop(1, 'rgba(255,255,255,0)');
+  c.fillStyle = jmRef;
+  rr(mobileX + 1, jawY + 1, jawW - 2, jawH * 0.3, 3);
+  c.strokeStyle = 'rgba(255,255,255,0.09)';
+  c.lineWidth = 1;
+  rrS(mobileX + 0.5, jawY + 0.5, jawW - 1, jawH - 1, 3);
+
+  // Vis de la mâchoire mobile
+  [[0.3, 0.25], [0.7, 0.25], [0.3, 0.75], [0.7, 0.75]].forEach(([tx, ty]) => {
+    const vx = mobileX + jawW * tx, vy = jawY + jawH * ty;
+    c.fillStyle = '#2a2e38';
+    c.beginPath(); c.arc(vx, vy, W * 0.016, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = 'rgba(180,190,210,0.28)';
+    c.lineWidth = 1;
+    c.beginPath(); c.arc(vx, vy, W * 0.016, 0, Math.PI * 2); c.stroke();
+    c.strokeStyle = 'rgba(180,190,210,0.45)';
+    c.lineWidth = 1.5;
+    c.beginPath(); c.moveTo(vx - W * 0.01, vy); c.lineTo(vx + W * 0.01, vy); c.stroke();
+    c.beginPath(); c.moveTo(vx, vy - W * 0.01); c.lineTo(vx, vy + W * 0.01); c.stroke();
+  });
+
+  // ── PIÈCE CYLINDRIQUE SERRÉE (visible entre les mors) ──
+  const pieceX = centerX - gap * 0.45;
+  const pieceW = gap * 0.9;
+  const pieceY = jawY + jawH * 0.12;
+  const pieceH = jawH * 0.76;
+  const pieceGrad = c.createLinearGradient(pieceX, pieceY, pieceX + pieceW, pieceY);
+  pieceGrad.addColorStop(0, '#5a6272');
+  pieceGrad.addColorStop(0.25, '#9aaabb');
+  pieceGrad.addColorStop(0.5, '#ccdaee');
+  pieceGrad.addColorStop(0.75, '#9aaabb');
+  pieceGrad.addColorStop(1, '#5a6272');
+  c.fillStyle = pieceGrad;
+  c.beginPath();
+  c.ellipse(centerX, pieceY + pieceH / 2, pieceW / 2, pieceH / 2, 0, 0, Math.PI * 2);
+  c.fill();
+  // Reflet cylindre
+  c.fillStyle = 'rgba(255,255,255,0.18)';
+  c.beginPath();
+  c.ellipse(centerX - pieceW * 0.12, pieceY + pieceH * 0.28, pieceW * 0.08, pieceH * 0.22, -0.3, 0, Math.PI * 2);
+  c.fill();
+
+  // ── Label gravé sur le corps ──
+  c.font = `bold ${H * 0.028}px Barlow Condensed, sans-serif`;
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  c.fillStyle = 'rgba(232,97,10,0.65)';
+  c.fillText('VarioGrip', centerX, bodyY + bodyH * 0.5);
+
+  // Reflet général (lumière venant d'en haut à gauche)
+  const globalLight = c.createLinearGradient(0, 0, W * 0.6, H * 0.5);
+  globalLight.addColorStop(0, 'rgba(255,255,255,0.04)');
+  globalLight.addColorStop(1, 'rgba(0,0,0,0)');
+  c.fillStyle = globalLight;
+  c.fillRect(0, 0, W, H);
+}
+
+// Init au chargement
+window.addEventListener('load', () => {
+  const heroEl = document.getElementById('viseHero');
+  const shopEl = document.getElementById('viseShop');
+  if (heroEl) {
+    const pw = heroEl.parentElement.clientWidth;
+    drawRealisticVise(heroEl, pw, Math.round(pw * 0.72));
+  }
+  if (shopEl) {
+    const pw = shopEl.parentElement.clientWidth;
+    drawRealisticVise(shopEl, pw, Math.round(pw * 0.72));
+  }
+  window.addEventListener('resize', () => {
+    if (heroEl) { const pw = heroEl.parentElement.clientWidth; drawRealisticVise(heroEl, pw, Math.round(pw * 0.72)); }
+    if (shopEl) { const pw = shopEl.parentElement.clientWidth; drawRealisticVise(shopEl, pw, Math.round(pw * 0.72)); }
+  });
+});
+</script>
+</body>
+</html>
